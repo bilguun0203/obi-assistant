@@ -1,0 +1,5 @@
+.venv
+nlu/model
+config.json
+.vscode
+*.tar.gz

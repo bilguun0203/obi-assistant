@@ -1,3 +1,5 @@
 from rasa_nlu.model import Interpreter
 
-interpreter = Interpreter.load('model')
+
+def load_model(dir='model'):
+    return Interpreter.load(dir)

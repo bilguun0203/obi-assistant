@@ -15,7 +15,6 @@ DO_NOT_KNOW = [
 
 def dispatch(intent):
     result = ''
-    print(intent['intent'])
     if intent['intent']['confidence'] > 0.55:
         if intent['intent']['name'] == 'greeting':
             result = greeting.greet()
@@ -27,10 +26,9 @@ def dispatch(intent):
             return time_n_date.get_day()
         elif intent['intent']['name'] == 'get_currency':
             if len(intent['entities']) > 0:
-                result = currency.get_currency()(
-                    intent['entities'][0]['value'])
+                result = currency.get_currency(intent['entities'][0]['value'])
             else:
-                result = currency.get_currency()()
+                result = currency.get_currency()
     else:
         result = DO_NOT_KNOW[math.floor(random.random()*len(DO_NOT_KNOW))]
     return result

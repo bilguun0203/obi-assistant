@@ -4,6 +4,7 @@ import random
 import skills.greeting as greeting
 import skills.currency as currency
 import skills.time_n_date as time_n_date
+import skills.weather as weather
 
 DO_NOT_KNOW = [
     'Таны юу яриад байгааг ойлгохгүй байна',
@@ -24,6 +25,11 @@ def dispatch(intent):
             result = time_n_date.get_date()
         elif intent['intent']['name'] == 'get_day':
             return time_n_date.get_day()
+        elif intent['intent']['name'] == 'get_weather':
+            p = {}
+            for entity in intent['entities']:
+                p[entity['entity']] = entity['value']
+            result = weather.get_weather(**p)
         elif intent['intent']['name'] == 'get_currency':
             if len(intent['entities']) > 0:
                 result = currency.get_currency(intent['entities'][0]['value'])

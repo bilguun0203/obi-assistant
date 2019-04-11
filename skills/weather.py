@@ -49,13 +49,17 @@ def get_weather(city='улаанбаатарт', day=None):
                 break
     if day in DAY_NAMES:
         js = api_call('forecast/daily', loc_id=loc_id)
-        temp_high = js['list'][DAY_NAMES.index(day)]['temp']['max']
-        temp_low = js['list'][DAY_NAMES.index(day)]['temp']['min']
+        temp_high = 'хасах ' + str(round(js['list'][DAY_NAMES.index(day)]['temp']['max'])) if js['list'][DAY_NAMES.index(
+            day)]['temp']['max'] < 0 else round(js['list'][DAY_NAMES.index(day)]['temp']['max'])
+        temp_low = 'хасах ' + str(round(js['list'][DAY_NAMES.index(day)]['temp']['min'])) if js['list'][DAY_NAMES.index(
+            day)]['temp']['min'] < 0 else round(js['list'][DAY_NAMES.index(day)]['temp']['min'])
         condition = 'цэлмэг'
-        return '{} {} {}, температур {} градус болон {} градусын хооронд байна'.format(city, day, condition, temp_low, temp_high)
+        return '{} {} {}, температур {} болон {} градусын хооронд байна'.format(city, day, condition, temp_low, temp_high)
     else:
         js = api_call('weather', loc_id=loc_id)
-        temp = js['main']['temp']
+        temp = 'хасах' + \
+            str(round(js['main']['temp'])) if js['main']['temp'] < 0 else round(
+                js['main']['temp'])
         wind_direction = ''
         wind_speed = 0
         if 'deg' in js['wind']:

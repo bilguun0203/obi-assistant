@@ -4,3 +4,4 @@ config.json
 .vscode
 *.tar.gz
 *.pyc
+**/__pycache__

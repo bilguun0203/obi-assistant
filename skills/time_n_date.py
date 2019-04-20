@@ -29,4 +29,4 @@ def get_date():
     today = date.today()
     month = today.month
     day = today.day
-    return 'Өнөөдөр ' + str(month) + ' сарын ' + str(day) + ' өдөр'
+    return 'Өнөөдөр ' + str(month) + ' сарын ' + str(day) + '-ны өдөр'

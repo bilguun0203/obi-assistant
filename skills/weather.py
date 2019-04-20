@@ -66,7 +66,7 @@ def get_weather(city='улаанбаатарт', day=None):
             wind_direction = WIND_DIRECTION[calc_wind_direction(
                 js['wind']['deg'])]
         if 'speed' in js['wind']:
-            wind_speed = js['wind']['speed']
+            wind_speed = round(js['wind']['speed'])
         condition = 'цэлмэг'
         return '{} одоо {}, {} градус, салхи {} {} метр секунд'.format(city, condition, temp, wind_direction, wind_speed)
 

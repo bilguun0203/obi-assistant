@@ -36,5 +36,7 @@ def dispatch(intent):
             else:
                 result = currency.get_currency()
     else:
-        result = DO_NOT_KNOW[math.floor(random.random()*len(DO_NOT_KNOW))]
+        result = False
+    if result == False:
+        result = DO_NOT_KNOW[math.floor(random.random() * len(DO_NOT_KNOW))]
     return result

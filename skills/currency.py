@@ -36,12 +36,17 @@ CURRENCIES = {
     'непалийн рупи': 'NPR',
     'өмнөд африкийн ранд': 'ZAR',
     'туркийн лира': 'TRY',
-    'вьетнам донг': 'VND'
+    'вьетнам дон': 'VND'
 }
 
 
 def get_currency(currency='Доллар'):
-    url = 'https://monxansh.appspot.com/xansh.json?currency='
-    r = requests.get(url=url + CURRENCIES[currency.lower()])
-    price = math.floor(r.json()[0]['rate_float'])
-    return currency + ' ' + str(price) + ' төгрөг байна'
+    try:
+        url = 'https://monxansh.appspot.com/xansh.json?currency='
+        r = requests.get(url=url + CURRENCIES[currency.lower()])
+        price = r.json()[0]['rate_float']
+        price1 = math.floor(price)
+        price2 = math.floor((price - price1) * 100)
+        return '{} {} төгрөг {} мөнгөтэй тэнцэж байна'.format(currency, price1, price2)
+    except:
+        return False

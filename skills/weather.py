@@ -54,7 +54,8 @@ def get_weather(city='улаанбаатарт', day=None):
         temp_low = 'хасах ' + str(round(js['list'][DAY_NAMES.index(day)]['temp']['min'])) if js['list'][DAY_NAMES.index(
             day)]['temp']['min'] < 0 else round(js['list'][DAY_NAMES.index(day)]['temp']['min'])
         condition = 'цэлмэг'
-        return '{} {} {}, температур {} болон {} градусын хооронд байна'.format(city, day, condition, temp_low, temp_high)
+        # return '{} {} {}, температур {} болон {} градусын хооронд байна'.format(city, day, condition, temp_low, temp_high)
+        return '{} {} температур {} болон {} градусын хооронд байна'.format(city, day, temp_low, temp_high)
     else:
         js = api_call('weather', loc_id=loc_id)
         temp = 'хасах' + \
@@ -68,7 +69,8 @@ def get_weather(city='улаанбаатарт', day=None):
         if 'speed' in js['wind']:
             wind_speed = round(js['wind']['speed'])
         condition = 'цэлмэг'
-        return '{} одоо {}, {} градус, салхи {} {} метр секунд'.format(city, condition, temp, wind_direction, wind_speed)
+        # return '{} одоо {}, {} градус, салхи {} {} метр секунд'.format(city, condition, temp, wind_direction, wind_speed)
+        return '{} одоо {} градус, салхи {} {} метр секунд'.format(city, temp, wind_direction, wind_speed)
 
 
 def api_call(wtype='weather', loc_id=2028461):

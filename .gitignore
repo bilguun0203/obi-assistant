@@ -5,3 +5,4 @@ config.json
 *.tar.gz
 *.pyc
 **/__pycache__
+**/precise-engine

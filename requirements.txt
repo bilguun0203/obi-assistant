@@ -1,4 +1,4 @@
 requests
-rasa_nlu
-spacy
+rasa_nlu==0.15.0
+spacy==2.0.18
 sklearn_crfsuite

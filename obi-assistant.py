@@ -6,7 +6,7 @@ import utils.tts as tts
 
 def load_model(path='nlu/model'):
     print('Loading Model...')
-    nlu_model = nlu.load_model('nlu/model')
+    model = nlu.load_model('nlu/model')
     return model
 
 

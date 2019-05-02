@@ -4,6 +4,7 @@ import time
 from pixel_ring import pixel_ring
 import mraa
 import os
+import utils.tts as tts
 
 
 # Pixel Ring initialization
@@ -18,6 +19,7 @@ pixel_ring.set_brightness(20)
 def on_activation():
     print('hello')
     pixel_ring.wakeup()
+    tts.play_wav('dist/activate.wav')
     time.sleep(3)
     pixel_ring.off()
 
@@ -32,10 +34,13 @@ def main():
 
 
 if __name__ == '__main__':
-    try:
-        main()
-        while True:
+    main()
+    while True:
+        try:
             time.sleep(1)
-    except KeyboardInterrupt:
-        pixel_ring.off()
-        en.write(1)
+        except KeyboardInterrupt:
+            break
+    pixel_ring.off()
+    time.sleep(1)
+
+en.write(1)

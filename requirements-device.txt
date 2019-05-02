@@ -1,3 +1,4 @@
 precise-runner
 pyaudio
 respeaker
+pixel_ring

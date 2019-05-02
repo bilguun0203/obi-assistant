@@ -53,7 +53,7 @@ def dispatch(intent, obj=None):
             result['answer'] = 'хэдэн ширхэгийг захиалах вэ'
         elif intent['intent']['name'] == 'order_quantity':
             if len(intent['entities']) > 0:
-                obj.set_quantity(int(intent['entities'][0]['value']))
+                obj.set_quantity(intent['entities'][0]['value'])
             else:
                 obj.set_quantity()
             result['answer'] = obj.order()

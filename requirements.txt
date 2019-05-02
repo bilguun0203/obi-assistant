@@ -1,3 +1,4 @@
+wheel
 requests
 rasa_nlu==0.15.0
 spacy==2.0.18

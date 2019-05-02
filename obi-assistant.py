@@ -2,6 +2,7 @@ import json
 from nlu import nlu
 from skills import skills
 import utils.tts as tts
+import subprocess
 
 
 def load_model(path='nlu/model'):
@@ -13,7 +14,7 @@ def load_model(path='nlu/model'):
 def request(str, obj):
     result = skills.dispatch(nlu_model.parse(s), obj)
     print(result['answer'])
-    tts.play_wav(tts.get_wav(result['answer']))
+    subprocess.run(['aplay', tts.get_wav(result['answer'])])
     return result['obj']
 
 

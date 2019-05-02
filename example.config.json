@@ -2,5 +2,6 @@
   "HOME_CITY": "Улаанбаатар",
   "HOME_ADDRESS": "",
   "WEATHER_API_KEY": "",
+  "STT_URL": "",
   "TTS_URL": ""
 }

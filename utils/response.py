@@ -12,7 +12,8 @@ class Response:
         print('Wakeup')
         if self.speaker:
             self.pixel_ring.wakeup()
-        subprocess.run(['aplay', '-q', 'dist/activate.wav'])
+        # subprocess.run(['aplay', '-r', '44100', '-q', 'dist/activate.wav'])
+        subprocess.run(['play', 'dist/activate.wav'])
 
     def think(self, intent, obj):
         print('Thinking...')
@@ -24,7 +25,8 @@ class Response:
         print('Speaking...')
         if self.speaker:
             self.pixel_ring.speak()
-        subprocess.run(['aplay', '-q', tts.get_wav(response)])
+        # subprocess.run(['aplay', '-r', '16000', '-q', tts.get_wav(response)])
+        subprocess.run(['play', tts.get_wav(response)])
 
     def reset(self):
         print('Reset')

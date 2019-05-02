@@ -10,11 +10,11 @@ def load_model(path='nlu/model'):
 
 
 class Assistant:
-    def __init__(self, model_path='nlu/model'):
+    def __init__(self, model_path='nlu/model', pixel_ring=None, device=False):
         self.nlu_model = load_model(model_path)
-        self.respond = Response(None, False)
+        self.respond = Response(pixel_ring, device)
 
-    def request(self, str, obj):
+    def request(self, str, obj=None):
         result = self.respond.think(self.nlu_model.parse(str), obj)
         print(result['answer'])
         self.respond.speak(result['answer'])

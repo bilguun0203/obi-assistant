@@ -5,6 +5,8 @@ from pixel_ring import pixel_ring
 import mraa
 import os
 import subprocess
+from utils.response import Response
+import obi_assistant
 
 
 # Pixel Ring initialization
@@ -15,11 +17,12 @@ en.dir(mraa.DIR_OUT)
 en.write(0)
 pixel_ring.set_brightness(20)
 
+dc = Response(pixel_ring, True)
+
 
 def on_activation():
     print('hello')
-    pixel_ring.wakeup()
-    subprocess.run(['aplay', 'dist/activate.wav'])
+    dc.wakeup()
     time.sleep(3)
     pixel_ring.off()
 

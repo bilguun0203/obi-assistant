@@ -38,15 +38,19 @@ def calc_wind_direction(degree=0):
     return round(degree/45) % 8
 
 
-def get_weather(city='улаанбаатарт', day=None):
-    loc_id = 2028461
+def get_weather(city='', day=None):
+    loc_id = None
     result = ''
+    city = city if city != '' else conf.config()['HOME_CITY']
     with open('./skills/city.list.json', 'r') as infile:
         cities = json.load(infile)
         for c in cities:
-            if c['name_dative'].lower() == city.lower():
+            if c['name_dative'].lower() == city.lower() or c['name'].lower() == city.lower():
+                city = c['name_dative']
                 loc_id = c['id']
                 break
+    if loc_id is None:
+        return False
     if day in DAY_NAMES:
         js = api_call('forecast/daily', loc_id=loc_id)
         temp_high = 'хасах ' + str(round(js['list'][DAY_NAMES.index(day)]['temp']['max'])) if js['list'][DAY_NAMES.index(

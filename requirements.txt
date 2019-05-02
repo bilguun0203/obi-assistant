@@ -1,3 +1,4 @@
+requests
 rasa_nlu
 spacy
 sklearn_crfsuite

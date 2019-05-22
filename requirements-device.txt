@@ -1,4 +1,7 @@
 precise-runner
 pyaudio
 respeaker
+spidev
+pyusb
+mraa
 pixel_ring

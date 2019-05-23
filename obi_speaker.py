@@ -11,7 +11,10 @@ from obi_assistant import Assistant
 import utils.config as conf
 import pyaudio
 import wave
+import argparse
 
+
+SOX = False
 
 # Pixel Ring initialization
 en = mraa.Gpio(12)
@@ -24,13 +27,13 @@ pixel_ring.set_brightness(20)
 assistant = Assistant('nlu/model', pixel_ring, True)
 
 
-def record(duration=6):
+def record(file_name='.tmp/stt.wav', duration=5):
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
     RATE = 16000
     CHUNK = 1024
     RECORD_SECONDS = duration
-    WAVE_OUTPUT_FILENAME = '.tmp/stt.flac'
+    WAVE_OUTPUT_FILENAME = file_name
 
     audio = pyaudio.PyAudio()
 
@@ -60,9 +63,11 @@ def record(duration=6):
 def stt():
     audio_file = '.tmp/stt.flac'
     text = False
-    record()
-    # subprocess.call(['rec', '-c', '1', '-r', '16000', '-d', audio_file,
-    #                  'trim', '0', '15', 'silence', '0', '0.1', '1%', '1', '2.0', '1%'])
+    if SOX:
+        subprocess.call(['rec', '-c', '1', '-r', '16000', '-d', audio_file,
+                         'trim', '0', '15', 'silence', '1', '0.1', '0.3%', '1', '3.0', '0.3%'])
+    else:
+        record(audio_file)
     output = str(subprocess.check_output(
         "curl -T {} {}".format(audio_file, conf.config()['STT_URL']), shell=True), 'utf-8')
     print(output)
@@ -72,6 +77,7 @@ def stt():
     print(response)
     if response['status'] == 0:
         text = response['hypotheses'][0]['utterance']
+        print('>>', text)
     return text
 
 
@@ -99,6 +105,10 @@ def main():
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='OBI SPEAKER')
+    parser.add_argument('--sox', action='store_true')
+    args = parser.parse_args()
+    SOX = args['sox']
     main()
     while True:
         try:

@@ -11,20 +11,20 @@ class Response:
     def wakeup(self):
         print('Wakeup')
         if self.speaker:
-            self.pixel_ring.wakeup()
+            self.pixel_ring.set_color(rgb=0x2962FF)
         subprocess.run(['aplay', '-r', '44100', '-q', 'dist/activate.wav'])
         # subprocess.run(['play', 'dist/activate.wav'])
 
     def think(self, intent, obj):
         print('Thinking...')
         if self.speaker:
-            self.pixel_ring.think()
+            self.pixel_ring.set_color(rgb=0xE53935)
         return skills.dispatch(intent, obj)
 
     def speak(self, response):
         print('Speaking...')
         if self.speaker:
-            self.pixel_ring.speak()
+            self.pixel_ring.set_color(rgb=0x00E676)
         subprocess.run(['aplay', '-r', '16000', '-q', tts.get_wav(response)])
         # subprocess.run(['play', tts.get_wav(response)])
 

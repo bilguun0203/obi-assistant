@@ -9,6 +9,8 @@ import subprocess
 from utils.response import Response
 from obi_assistant import Assistant
 import utils.config as conf
+import pyaudio
+import wave
 
 
 # Pixel Ring initialization
@@ -22,11 +24,45 @@ pixel_ring.set_brightness(20)
 assistant = Assistant('nlu/model', pixel_ring, True)
 
 
+def record(duration=6):
+    FORMAT = pyaudio.paInt16
+    CHANNELS = 1
+    RATE = 16000
+    CHUNK = 1024
+    RECORD_SECONDS = duration
+    WAVE_OUTPUT_FILENAME = '.tmp/stt.flac'
+
+    audio = pyaudio.PyAudio()
+
+    stream = audio.open(format=FORMAT, channels=CHANNELS,
+                        rate=RATE, input=True,
+                        frames_per_buffer=CHUNK)
+    print "recording..."
+    frames = []
+
+    for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+        data = stream.read(CHUNK)
+        frames.append(data)
+    print "finished recording"
+
+    stream.stop_stream()
+    stream.close()
+    audio.terminate()
+
+    waveFile = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
+    waveFile.setnchannels(CHANNELS)
+    waveFile.setsampwidth(audio.get_sample_size(FORMAT))
+    waveFile.setframerate(RATE)
+    waveFile.writeframes(b''.join(frames))
+    waveFile.close()
+
+
 def stt():
     audio_file = '.tmp/stt.flac'
     text = False
-    subprocess.run(['rec', '-c', '1', '-r', '16000', '-d', audio_file,
-                    'trim', '0', '15', 'silence', '1', '0.1', '0.3%', '1', '3.0', '0.3%'])
+    record()
+    # subprocess.call(['rec', '-c', '1', '-r', '16000', '-d', audio_file,
+    #                  'trim', '0', '15', 'silence', '0', '0.1', '1%', '1', '2.0', '1%'])
     output = str(subprocess.check_output(
         "curl -T {} {}".format(audio_file, conf.config()['STT_URL']), shell=True), 'utf-8')
     print(output)

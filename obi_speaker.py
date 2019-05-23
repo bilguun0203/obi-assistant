@@ -108,7 +108,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='OBI SPEAKER')
     parser.add_argument('--sox', action='store_true')
     args = parser.parse_args()
-    SOX = args['sox']
+    SOX = args.sox
     main()
     while True:
         try:

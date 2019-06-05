@@ -1,0 +1,11 @@
+Description=Start OBI SPEAKER service
+
+[Service]
+Environment="XDG_RUNTIME_DIR=/run/user/1000"
+Type=simple
+WorkingDirectory=/home/respeaker/obi-assistant
+ExecStart=/home/respeaker/obi-assistant/.venv/bin/python /home/respeaker/obi-assistant/obi_speaker.py
+User=respeaker
+
+[Install]
+WantedBy=multi-user.target

@@ -24,6 +24,8 @@ en.dir(mraa.DIR_OUT)
 en.write(0)
 pixel_ring.set_brightness(20)
 
+pixel_ring.wakeup()
+
 assistant = Assistant('nlu/model', pixel_ring, True)
 
 
@@ -110,6 +112,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     SOX = args.sox
     main()
+    pixel_ring.off()
     while True:
         try:
             time.sleep(1)
